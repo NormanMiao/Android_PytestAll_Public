@@ -73,7 +73,7 @@ class TestVideoCollection:
         item_btn = self.driver.find_element(by=AppiumBy.XPATH,
                                             value='//android.widget.TextView['
                                                   '@resource-id="com.oohoo.videocollection:id/title" and @index="0"]')
-        assert item_btn
+        assert item_btn is not None
         item_btn.click()
         time.sleep(timeout)
 
