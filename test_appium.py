@@ -79,7 +79,6 @@ class TestVideoCollection:
     def test_douban(self):
         self.show_menu()
         self.sel_menu_item("豆瓣Top250")
-        self.click_first_item(timeout=20)
 
     def test_live(self):
         self.show_menu()
