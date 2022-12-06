@@ -79,10 +79,17 @@ class TestVideoCollection:
     def test_douban(self):
         self.show_menu()
         self.sel_menu_item("豆瓣Top250")
+<<<<<<< HEAD:py_appium/test_appium.py
 
+=======
+>>>>>>> 010870aad03dd70d5870af862189aba0ce32c996:test_appium.py
 
     def test_live(self):
         self.show_menu()
         self.sel_menu_item("直播")
+<<<<<<< HEAD:py_appium/test_appium.py
         self.click_first_item()
+=======
+        self.click_first_item(timeout=20)
+>>>>>>> 010870aad03dd70d5870af862189aba0ce32c996:test_appium.py
 
