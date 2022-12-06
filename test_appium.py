@@ -73,17 +73,18 @@ class TestVideoCollection:
         item_btn = self.driver.find_element(by=AppiumBy.XPATH,
                                             value='//android.widget.TextView['
                                                   '@resource-id="com.oohoo.videocollection:id/title" and @index="0"]')
-        assert item_btn is not None
         item_btn.click()
         time.sleep(timeout)
 
     def test_douban(self):
         self.show_menu()
         self.sel_menu_item("豆瓣Top250")
-        self.click_first_item(timeout=20)
+        re1 = self.click_first_item(timeout=20)
+        assert re1 is not None 
 
     def test_live(self):
         self.show_menu()
         self.sel_menu_item("直播")
-        self.click_first_item(timeout=20)
+        re2 = self.click_first_item(timeout=20)
+        assert re2 is not None
 
