@@ -85,9 +85,5 @@ class TestVideoCollection:
     def test_live(self):
         self.show_menu()
         self.sel_menu_item("直播")
-        self.click_first_item()
-
-    def test_cloudmusic(self):
-        self.show_menu()
-        self.sel_menu_item("云音乐")
         self.click_first_item(timeout=20)
+
