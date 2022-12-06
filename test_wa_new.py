@@ -42,19 +42,19 @@ class TestClass:
         time.sleep(1)
         click('//android.widget.FrameLayout[@resource-id="android:id/content"]/android.widget.LinearLayout/android.widget.Button[@text="SUBMIT" and @resource-id="com.tencent.wetestdemo:id/submitbtn"]', by=DriverType.UI, timeout=20)
         time.sleep(3)
-        find_el =find(loc="obj_1669617144541.jpg", by=DriverType.CV, timeout=30)
+        find_el = find(loc="obj_1670319758223.jpg", by=DriverType.CV, timeout=30)
         assert(find_el)
         screenshot(label="screenshot", img_path=None, pos=None)
 
     def test_eventhandle(self):
         self.login("norman","123456")
         """不选择item，直接提交"""
-        click(loc="obj_1669618393661.jpg", by=DriverType.CV, offset=None, timeout=30, duration=0.05, times=1)
+        submit = find(loc="//*[@resource-id='com.tencent.wetestdemo:id/submitbtn']", by=DriverType.UI, timeout=30)
+        assert submit is not None
+        click(loc=submit, by=DriverType.POS, offset=None, timeout=30, duration=0.05, times=1)
         add_event_handler("(Error|Ok)",'Ok')
         start_event_handler()
         time.sleep(5)
-        find_e2 =find(loc="obj_1669618393661.jpg", by=DriverType.CV, timeout=30)
-        assert(find_e2)
 
 if __name__ == '__main__':
     pytest.main(['-s',"test_wa_pytest.py"])
