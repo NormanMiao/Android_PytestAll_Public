@@ -79,12 +79,10 @@ class TestVideoCollection:
     def test_douban(self):
         self.show_menu()
         self.sel_menu_item("豆瓣Top250")
-        re1 = self.click_first_item(timeout=20)
-        assert re1 is not None 
+        self.click_first_item(timeout=20)
 
     def test_live(self):
         self.show_menu()
         self.sel_menu_item("直播")
-        re2 = self.click_first_item(timeout=20)
-        assert re2 is not None
+        self.click_first_item(timeout=20)
 
