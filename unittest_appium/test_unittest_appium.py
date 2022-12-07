@@ -72,6 +72,7 @@ class TestVideoCollection(unittest.TestCase):
 
     def test_music(self):
         self.show_menu()
+<<<<<<< HEAD:unittest_appium/test_unittest_appium.py
         self.sel_menu_item("云音乐")
         time.sleep(15)
         item_btn1 = self.driver.find_element(by=AppiumBy.XPATH,
@@ -81,10 +82,15 @@ class TestVideoCollection(unittest.TestCase):
         item_btn1.click()
         print("点击我和我的父辈")
         time.sleep(5)
+=======
+        self.sel_menu_item("豆瓣Top250")
+
+>>>>>>> 7a67c8ec7d1adc10db04041b059e4791c2ca67a8:py_appium/test_appium.py
 
     def test_live(self):
         self.show_menu()
         self.sel_menu_item("直播")
+<<<<<<< HEAD:unittest_appium/test_unittest_appium.py
         time.sleep(10)
         item_btn2 = self.driver.find_element(by=AppiumBy.XPATH,
                                             value='//android.widget.TextView['
@@ -95,4 +101,7 @@ class TestVideoCollection(unittest.TestCase):
         time.sleep(5)
 
 
+=======
+        self.click_first_item()
+>>>>>>> 7a67c8ec7d1adc10db04041b059e4791c2ca67a8:py_appium/test_appium.py
 
