@@ -1,5 +1,5 @@
 # Android_PytestAll_Public
-安卓全框架公有仓
+安卓全框架公有仓（unittest框架）
 
 内含 wa appium ga airtest 的安卓脚本，提测时请注意框架与脚本对应
 
