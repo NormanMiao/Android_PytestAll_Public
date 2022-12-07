@@ -4,25 +4,26 @@ try:
 except:
     print("cannot import module uitrace.api")
 import pytest
+import unittest
 
-class TestClass:
+class TestClass(unittest.TestCase):
     @classmethod
     # 初始化类
-    def setup_class(cls):
+    def setUpClass(cls):
         init_driver()
         
     @classmethod
-    def teardown_class(cls):
+    def tearDownClass(cls):
         stop_driver()
 
     #每个用例开始前初始化
-    def setup_method(self,method):
+    def setUp(self):
         press(DeviceButton.HOME)
         time.sleep(2)
         start_app("com.tencent.wetestdemo", clear_data=True)
         time.sleep(2)
 
-    def teardown_method(self,method):
+    def tearDown(self):
         stop_app("com.tencent.wetestdemo")
 
     def login(self,acc,pwd):
@@ -56,5 +57,4 @@ class TestClass:
         start_event_handler()
         time.sleep(5)
 
-if __name__ == '__main__':
-    pytest.main(['-s',"test_wa_pytest.py"])
+

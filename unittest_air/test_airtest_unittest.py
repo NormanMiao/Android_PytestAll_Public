@@ -1,6 +1,7 @@
 # -*- encoding=utf8 -*-
 import os
 print(os.environ)
+import unittest
 from airtest.core.api import *
 from poco.drivers.android.uiautomation import AndroidUiautomationPoco
 auto_setup(__file__)
@@ -8,7 +9,7 @@ app_package = "com.oohoo.videocollection"
 app_activity = "com.oohoo.videocollection.MainActivity"
 
 
-class TestVideoCollection:
+class TestVideoCollection(unittest.TestCase):
     poco = None
 
     @classmethod
@@ -19,7 +20,7 @@ class TestVideoCollection:
     def teardown_class(cls):
         cls.poco.stop_running()
 
-    def setup_method(self, method):
+    def setUp(self):
         print("启动app")
         clear_app(app_package)
         time.sleep(0.3)
@@ -27,7 +28,7 @@ class TestVideoCollection:
         print("点击进入")
         self.poco("com.oohoo.videocollection:id/welcome_btn").click()
 
-    def teardown_method(self, method):
+    def tearDown(self):
         print("停止app")
         stop_app(app_package)
 

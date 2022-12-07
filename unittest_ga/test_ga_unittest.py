@@ -2,7 +2,7 @@
 import os
 import sys
 import time
-
+import unittest
 import wpyscripts.manager as manager
 from wpyscripts.common.adb_process import excute_adb_process
 print("adb devices: ", flush=True)
@@ -17,7 +17,7 @@ app_package = "com.tencent.wetest.demo"
 app_activity = "com.unity3d.player.UnityPlayerActivity"
 
 
-class TestGA:
+class TestGA(unittest.TestCase):
     engine = None
 
     @classmethod
@@ -34,11 +34,11 @@ class TestGA:
     def teardown_class(cls):
         excute_adb_process("shell am force-stop %s" % app_package)
 
-    def setup_method(self, method):
+    def setUp(self):
         print("setup_method: ", method)
         self.need_return = False
 
-    def teardown_method(self, method):
+    def tearDown(self):
         print("teardown_method: ", method)
         if self.need_return:
             excute_adb_process("shell input keyevent 4")

@@ -3,9 +3,10 @@
 import time
 from appium import webdriver
 from appium.webdriver.common.appiumby import AppiumBy
+import os
+import unittest
 
 # test platform start
-import os
 print("adb devices: ")
 print(os.system("adb devices"))
 print("env: ")
@@ -17,11 +18,11 @@ app_package = "com.oohoo.videocollection"
 app_activity = "com.oohoo.videocollection.MainActivity"
 
 
-class TestVideoCollection:
+class TestVideoCollection(unittest.TestCase):
     driver = None
 
     @classmethod
-    def setup_class(cls):
+    def setUpClass(cls):
         # 定义一个字典，存储capability信息
         desired_caps = {
             "platformName": "Android",
@@ -32,18 +33,18 @@ class TestVideoCollection:
         print("启动测试")
 
     @classmethod
-    def teardown_class(cls):
+    def tearDownClass(cls):
         cls.driver.stop_client()
         print("结束测试")
 
-    def setup_method(self, method):
+    def setUp(self):
         print("启动app")
         self.driver.start_activity(app_package, app_activity)
         print("点击进入")
         welcome_btn = self.driver.find_element(by=AppiumBy.ID, value="welcome_btn")
         welcome_btn.click()
 
-    def teardown_method(self, method):
+    def tearDown(self):
         print("停止app")
         self.driver.terminate_app(app_package)
 
@@ -68,28 +69,30 @@ class TestVideoCollection:
         menu_item_btn.click()
         time.sleep(2)
 
-    def click_first_item(self, timeout=5):
-        print("点击第一条")
-        item_btn = self.driver.find_element(by=AppiumBy.XPATH,
-                                            value='//android.widget.TextView['
-                                                  '@resource-id="com.oohoo.videocollection:id/title" and @index="0"]')
-        item_btn.click()
-        time.sleep(timeout)
 
-    def test_douban(self):
+    def test_music(self):
         self.show_menu()
-        self.sel_menu_item("豆瓣Top250")
-<<<<<<< HEAD:py_appium/test_appium.py
-
-=======
->>>>>>> 010870aad03dd70d5870af862189aba0ce32c996:test_appium.py
+        self.sel_menu_item("云音乐")
+        time.sleep(15)
+        item_btn1 = self.driver.find_element(by=AppiumBy.XPATH,
+                                             value='//android.widget.TextView['
+                                                   '@resource-id="com.oohoo.videocollection:id/title" and @text="如愿（电影《我和我的父辈》主题推广曲）"]')
+        assert item_btn1 is not None
+        item_btn1.click()
+        print("点击我和我的父辈")
+        time.sleep(5)
 
     def test_live(self):
         self.show_menu()
         self.sel_menu_item("直播")
-<<<<<<< HEAD:py_appium/test_appium.py
-        self.click_first_item()
-=======
-        self.click_first_item(timeout=20)
->>>>>>> 010870aad03dd70d5870af862189aba0ce32c996:test_appium.py
+        time.sleep(10)
+        item_btn2 = self.driver.find_element(by=AppiumBy.XPATH,
+                                            value='//android.widget.TextView['
+                                                  '@resource-id="com.oohoo.videocollection:id/title" and @text="CCTV-1高清"]')
+        assert item_btn2 is not None
+        item_btn2.click()
+        print("点击CCTV1")
+        time.sleep(5)
+
+
 
