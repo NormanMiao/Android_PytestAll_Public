@@ -34,7 +34,7 @@ class TestClass(unittest.TestCase):
         screenshot(label="screenshot", img_path=None, pos=None)
         click('//android.view.ViewGroup[@resource-id="com.tencent.wetestdemo:id/container"]/android.widget.Button[@text="SIGNIN" and @resource-id="com.tencent.wetestdemo:id/login"]', by=DriverType.UI, timeout=30)
 
-    def test_findelement(self):
+    def test_findCV(self):
         self.login("norman","123456")
         # 勾选后进入CHECK页
         click('//android.widget.ListView[@resource-id="com.tencent.wetestdemo:id/list_item"]/android.widget.CheckedTextView[@text="Item0" and @resource-id="android:id/text1"]', by=DriverType.UI, timeout=20)
@@ -56,5 +56,18 @@ class TestClass(unittest.TestCase):
         add_event_handler("(Error|Ok)",'Ok')
         start_event_handler()
         time.sleep(5)
+        
+        
+    def test_findOCR(self):
+        self.login("norman","123456")
+        click('//android.widget.ListView[@resource-id="com.tencent.wetestdemo:id/list_item"]/android.widget.CheckedTextView[@text="Item0" and @resource-id="android:id/text1"]', by=DriverType.UI, timeout=20)
+        click('//android.widget.ListView[@resource-id="com.tencent.wetestdemo:id/list_item"]/android.widget.CheckedTextView[@text="Item3" and @resource-id="android:id/text1"]', by=DriverType.UI, timeout=20)
+        screenshot(label="screenshot", img_path=None, pos=None)
+        time.sleep(1)
+        click('//android.widget.FrameLayout[@resource-id="android:id/content"]/android.widget.LinearLayout/android.widget.Button[@text="SUBMIT" and @resource-id="com.tencent.wetestdemo:id/submitbtn"]', by=DriverType.UI, timeout=20)
+        time.sleep(3)
+        a =click(loc="obj_1670319758223.jpg", by=DriverType.OCR, offset=None, timeout=30, duration=0.05, times=1)
+        assert a is True
+        screenshot(label="screenshot", img_path=None, pos=None)
 
 
