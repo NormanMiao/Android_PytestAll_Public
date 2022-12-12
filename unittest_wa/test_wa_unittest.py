@@ -85,8 +85,11 @@ class TestClass(unittest.TestCase):
         # 双击item3
         double_click(loc="//*[@text='Item3']", by=DriverType.UI, offset=None, timeout=30)
         time.sleep(1)
-        # 滑动屏幕
-        slide(loc_from=[0.569,0.673], loc_to=[0.538,0.216], loc_shift=None, by=DriverType.POS, timeout=30, down_duration=0, up_duration=0, velocity=0.01)
+        # 分别获取item7和item0的坐标，备用        
+        pos_from = find(loc="//*[@text='Item7']", by=DriverType.UI, timeout=30)
+        pos_to = find(loc="//*[@text='Item0']", by=DriverType.UI, timeout=30)
+        # 借助上面获取的坐标滑动屏幕
+        slide(loc_from=pos_from, loc_to=pos_to, loc_shift=None, by=DriverType.POS, timeout=30, down_duration=0, up_duration=0, velocity=0.01)
         time.sleep(2)
         # 断言item10存在并获取item10坐标
         item_pos =  find(loc="//*[@text='Item10']", by=DriverType.UI, timeout=30)
