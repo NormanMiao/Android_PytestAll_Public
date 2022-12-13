@@ -1,5 +1,5 @@
-# Android_PytestAll_Public
-本示例用pytest组织测试用例，完成对qq音乐的测试，包括：使用qq登录qq音乐、使用qq音乐搜索和清除qq音乐缓存。
+# Android_UnittestAll_Public
+本示例用unittest组织测试用例，完成对wetestdemo的测试，包括登录失败、登录成功、检查勾选内容三个场景。
 
 【用例介绍】
 
