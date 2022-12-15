@@ -11,8 +11,6 @@ class TestClass(unittest.TestCase):
         """测试类开始执行前执行一次"""
         # 初始化设备驱动和环境
         init_driver(workspace=os.path.dirname(__file__))
-        # 启动弹窗处理
-        start_event_handler()
         # 返回主页
         press(DeviceButton.HOME)
         
