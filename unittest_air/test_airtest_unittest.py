@@ -18,11 +18,11 @@ class TestVideoCollection(unittest.TestCase):
     poco = None
 
     @classmethod
-    def setup_class(cls):
+    def setUpClass(cls):
         cls.poco = AndroidUiautomationPoco(use_airtest_input=True, screenshot_each_action=True)
 
     @classmethod
-    def teardown_class(cls):
+    def tearDownClass(cls):
         cls.poco.stop_running()
 
     def setUp(self):
