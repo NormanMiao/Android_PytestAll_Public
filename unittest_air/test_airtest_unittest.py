@@ -11,7 +11,7 @@ except:
 
 
 
-class TestVideoCollection(unittest.TestCase):
+class TestWestDemo(unittest.TestCase):
     poco = None
 
     @classmethod
