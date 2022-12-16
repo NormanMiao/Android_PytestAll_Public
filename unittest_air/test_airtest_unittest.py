@@ -2,21 +2,19 @@
 
 
 try:
-from airtest.core.api import *
+    from airtest.core.api import *
     from airtest.cli.parser import cli_setup
     import time
     from poco.drivers.android.uiautomation import AndroidUiautomationPoco
-    auto_setup(__file__)
+    import unittest
 except:
     print("cannot import airtest")
 if not cli_setup():
     auto_setup(__file__, logdir=True, devices=["Android:///",])
-import unittest
+
 
 
 class TestVideoCollection(unittest.TestCase):
-    poco = None
-
     @classmethod
     def setUpClass(cls):
         cls.poco = AndroidUiautomationPoco(use_airtest_input=True, screenshot_each_action=True)
