@@ -1,12 +1,17 @@
 # -*- encoding=utf8 -*-
-import os
-print(os.environ)
-import unittest
+
+
+try:
 from airtest.core.api import *
-from poco.drivers.android.uiautomation import AndroidUiautomationPoco
-auto_setup(__file__)
-app_package = "com.oohoo.videocollection"
-app_activity = "com.oohoo.videocollection.MainActivity"
+    from airtest.cli.parser import cli_setup
+    import time
+    from poco.drivers.android.uiautomation import AndroidUiautomationPoco
+    auto_setup(__file__)
+except:
+    print("cannot import airtest")
+if not cli_setup():
+    auto_setup(__file__, logdir=True, devices=["Android:///",])
+import unittest
 
 
 class TestVideoCollection(unittest.TestCase):
@@ -21,38 +26,49 @@ class TestVideoCollection(unittest.TestCase):
         cls.poco.stop_running()
 
     def setUp(self):
-        print("启动app")
-        clear_app(app_package)
+        # 清理APP历史数据
+        clear_app("com.tencent.wetestdemo")
         time.sleep(0.3)
-        start_app(app_package)
-        print("点击进入")
-        self.poco("com.oohoo.videocollection:id/welcome_btn").click()
+        start_app("com.tencent.wetestdemo")
 
     def tearDown(self):
         print("停止app")
-        stop_app(app_package)
+        stop_app("com.tencent.wetestdemo")
 
-    def show_menu(self):
-        self.poco("Open navigation drawer").click()
-        time.sleep(2)
+    def test_login_fail(self):
+        """不输入账号密码，直接登录——出现Login Failed的弹窗"""
+        # 点击SIGNIN按钮
+        poco("com.tencent.wetestdemo:id/login").click()
+        # 图片识别login failed的弹窗出现
+        assert_exists(Template(r"tpl1671115344501.png", record_pos=(-0.207, -0.151), resolution=(1080, 2160)), "登录失败")
+        snapshot(msg="登录失败")
 
-    def sel_menu_item(self, name):
-        self.poco(text="%s" % name).click()
-        time.sleep(2)
-
-    def click_first_item(self, timeout=5):
-        self.poco("com.oohoo.videocollection:id/video_list")\
-            .child("android.widget.LinearLayout")[0].click()
-        time.sleep(timeout)
-
-    def test_douban(self):
-        self.show_menu()
-        self.sel_menu_item("豆瓣Top250")
-        self.click_first_item()
-        assert_exists(Template(r"tpl1669563928678.png", record_pos=(-0.041, -0.208), resolution=(1080, 2400)), "霸王别姬")
-
-    def test_cloudmusic(self):
-        self.show_menu()
-        self.sel_menu_item("云音乐")
-        self.click_first_item(timeout=20)
-        assert_exists(Template(r"tpl1669564411595.png", record_pos=(0.187, 1.056), resolution=(1080, 2400)), "04:27")
+    def test_login_success(self):
+        """输入账号密码——登录成功——进入SELECT页面——断言左上角SELECT元素存在"""
+        # 点击“输入账号”输入框
+        poco("com.tencent.wetestdemo:id/username").click()
+        # 输入账号
+        text("norman")
+        # 点击“输入密码”输入框
+        poco("com.tencent.wetestdemo:id/password").click()
+        # 输入密码
+        text("123456")
+        # 点击SIGNIN按钮
+        poco("com.tencent.wetestdemo:id/login").click()
+        sleep(2)
+    def test_check_elements(self):
+        """登录——勾选item1,item10 """
+        # 登录，进入SELECT页
+        self.test_login_success()
+        # 单击item1
+        poco(text="Item1").click()
+        # 滑动
+        swipe(Template(r"tpl1671116336669.png", record_pos=(-0.061, 0.078), resolution=(1080, 2160)), vector=[0.0611, -0.3171])
+        # 单击item10
+        poco(text="Item10").click()
+        # 点击提交
+        touch(Template(r"tpl1671116431387.png", record_pos=(-0.322, -0.669), resolution=(1080, 2160)))
+        # 进入检查页面，检查之前选择的item1和Item10在页面上显示
+        check_item = poco(text="[Item1, Item10]").exists()
+        assert(check_item)
+        
