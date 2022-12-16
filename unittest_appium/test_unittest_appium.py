@@ -5,20 +5,10 @@ from appium import webdriver
 from appium.webdriver.common.appiumby import AppiumBy
 import os
 import unittest
+app_package ="com.tencent.wetestdemo"
+app_activity = "com.tencent.wetestdemo.LoginActivity"
 
-# test platform start
-print("adb devices: ")
-print(os.system("adb devices"))
-print("env: ")
-print(os.system("env"))
-print("appium: ")
-print(os.system("ps -ef|grep appium"))
-
-app_package = "com.oohoo.videocollection"
-app_activity = "com.oohoo.videocollection.MainActivity"
-
-
-class TestVideoCollection(unittest.TestCase):
+class TestWetestDemo(unittest.TestCase):
     driver = None
 
     @classmethod
@@ -26,11 +16,11 @@ class TestVideoCollection(unittest.TestCase):
         # 定义一个字典，存储capability信息
         desired_caps = {
             "platformName": "Android",
-            "appPackage": app_package,
-            "appActivity": app_activity
+            "appPackage": "com.tencent.wetestdemo",
+            "appActivity": "com.tencent.wetestdemo.LoginActivity"
         }
         cls.driver = webdriver.Remote("http://127.0.0.1:4723/wd/hub", desired_caps)
-        print("启动测试")
+
 
     @classmethod
     def tearDownClass(cls):
@@ -40,59 +30,73 @@ class TestVideoCollection(unittest.TestCase):
     def setUp(self):
         print("启动app")
         self.driver.start_activity(app_package, app_activity)
-        print("点击进入")
-        welcome_btn = self.driver.find_element(by=AppiumBy.ID, value="welcome_btn")
-        welcome_btn.click()
+        time.sleep(5)
 
     def tearDown(self):
         print("停止app")
         self.driver.terminate_app(app_package)
 
-    def show_menu(self):
-        print("点击显示菜单")
-        menu_btn = self.driver.find_element(by=AppiumBy.XPATH,
-                                            value='//android.widget.FrameLayout/android.widget.LinearLayout/android'
-                                                  '.widget.FrameLayout/android.widget.LinearLayout/android.widget'
-                                                  '.FrameLayout/androidx.drawerlayout.widget.DrawerLayout/android'
-                                                  '.view.ViewGroup/android.widget.LinearLayout/android.view.ViewGroup'
-                                                  '/android.widget.ImageButton')
-        menu_btn.click()
-        time.sleep(2)
 
-
-    def sel_menu_item(self, name):
-        print("点击"+name)
-        menu_item_btn = self.driver.find_element(by=AppiumBy.XPATH,
-                                                 value='//android.widget.CheckedTextView[@text="%s" and '
-                                                       '@resource-id="com.oohoo.videocollection:id'
-                                                       '/design_menu_item_text"]' % name)
-        menu_item_btn.click()
-        time.sleep(2)
-
-
-    def test_music(self):
-        self.show_menu()
-        self.sel_menu_item("云音乐")
-        time.sleep(15)
-        item_btn1 = self.driver.find_element(by=AppiumBy.XPATH,
-                                             value='//android.widget.TextView['
-                                                   '@resource-id="com.oohoo.videocollection:id/title" and @text="如愿（电影《我和我的父辈》主题推广曲）"]')
-        assert item_btn1 is not None
-        item_btn1.click()
-        print("点击我和我的父辈")
+    def test_0_login_fail(self):
+        """不输入账号密码，直接登录——出现Login Failed的弹窗"""
+        # 判断登录按钮存在
+        login = self.driver.find_element(by=AppiumBy.ID,value="com.tencent.wetestdemo:id/login")
+        assert login is not None
+        # 点击登录
+        login.click()
+        print("登录失败")
         time.sleep(5)
 
-    def test_live(self):
-        self.show_menu()
-        self.sel_menu_item("直播")
-        time.sleep(10)
-        item_btn2 = self.driver.find_element(by=AppiumBy.XPATH,
-                                            value='//android.widget.TextView['
-                                                  '@resource-id="com.oohoo.videocollection:id/title" and @text="CCTV-1高清"]')
-        assert item_btn2 is not None
-        item_btn2.click()
-        print("点击CCTV1")
+    def test_1_login_success_0(self):
+        """输入账号密码——登录成功——进入SELECT页面——断言左上角SELECT元素存在"""
+        # 输入账号
+        acc = self.driver.find_element(by=AppiumBy.ID, value="com.tencent.wetestdemo:id/username")
+        acc.click()
+        acc.send_keys("norman")
+        time.sleep(2)
+        # 输入密码
+        pwd = self.driver.find_element(by=AppiumBy.ID, value="com.tencent.wetestdemo:id/password")
+        pwd.click()
+        pwd.send_keys("123456")
+        time.sleep(2)
+        # 点击登录
+        login = self.driver.find_element(by=AppiumBy.ID, value="com.tencent.wetestdemo:id/login")
+        login.click()
+        time.sleep(5)
+        # 进入勾选页，判断submit按钮存在
+        submit = self.driver.find_element(by=AppiumBy.ID, value="com.tencent.wetestdemo:id/submitbtn")
+        assert submit is not None
         time.sleep(5)
 
 
+    def test_2_check_elements_1(self):
+        """登录——勾选item0,item5，点击提交，进入check页，检查内容为item0和item5"""
+        # 登录，进入SELECT页
+        self.test_1_login_success_0()
+        # 选中item0
+        item_0 = self.driver.find_element(by=AppiumBy.XPATH,
+                                                value='/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.'
+                                                      'view.ViewGroup/android.widget.FrameLayout[2]/android.widget.LinearLayout/android.widget.ListView/android.'
+                                                      'widget.CheckedTextView[1]')
+        item_0.click()
+        time.sleep(3)
+        # 选中item5
+        item_5 = self.driver.find_element(by=AppiumBy.XPATH,
+                                          value='/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.'
+                                                'view.ViewGroup/android.widget.FrameLayout[2]/android.widget.LinearLayout/android.widget.ListView/android.'
+                                                'widget.CheckedTextView[6 ]')
+        time.sleep(3)
+        item_5.click()
+        # 点击提交
+        self.driver.find_element(by=AppiumBy.ID, value="com.tencent.wetestdemo:id/submitbtn").click()
+        time.sleep(5)
+        # 进入check页，检查内容为item0和item5（上一页勾选的内容）
+        item_check = self.driver.find_element(by=AppiumBy.XPATH,
+                                          value='//android.widget.TextView[@text="[Item0, Item5]"]')
+        assert item_check is not None
+        print("checked")
 
+
+
+if __name__ == '__main__':
+    unittest.main()
