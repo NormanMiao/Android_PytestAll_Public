@@ -56,6 +56,7 @@ class TestVideoCollection(unittest.TestCase):
         # 点击SIGNIN按钮
         poco("com.tencent.wetestdemo:id/login").click()
         sleep(2)
+
     def test_check_elements(self):
         """登录——勾选item1,item10 """
         # 登录，进入SELECT页
