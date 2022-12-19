@@ -46,6 +46,10 @@ class TestWetestDemo(unittest.TestCase):
         login.click()
         print("登录失败")
         time.sleep(5)
+        # 弹窗出现
+        fail_msg = self.driver.find_element(by=AppiumBy.XPATH,
+                                            value='//android.widget.Button[@text="OK"]')
+        assert fail_msg is not None
 
     def test_1_login_success_0(self):
         """输入账号密码——登录成功——进入SELECT页面——断言左上角SELECT元素存在"""
