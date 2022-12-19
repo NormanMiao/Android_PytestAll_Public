@@ -53,7 +53,10 @@ class TestWestDemo(unittest.TestCase):
         # 点击SIGNIN按钮
         self.poco("com.tencent.wetestdemo:id/login").click()
         sleep(2)
-
+        # 进入SELECT页面，断言左上角Submit元素存在
+        submit = self.poco("com.tencent.wetestdemo:id/submitbtn")
+        assert submit is not None
+        
     def test_check_elements(self):
         """登录——勾选item1,item10 """
         # 登录，进入SELECT页
