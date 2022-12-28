@@ -24,5 +24,5 @@
 
 被测apk:wetestdemo.apk
 
-自动化框架：含wa+appium+ga+airtest，提测时请注意框架与脚本对应。
+自动化框架：包含wa+appium+airtest三种，提测时请注意框架与脚本对应。
 
