@@ -57,20 +57,20 @@ class TestWetestDemo(unittest.TestCase):
         acc = self.driver.find_element(by=AppiumBy.ID, value="com.tencent.wetestdemo:id/username")
         acc.click()
         acc.send_keys("norman")
-        time.sleep(2)
+        time.sleep(1)
         # 输入密码
         pwd = self.driver.find_element(by=AppiumBy.ID, value="com.tencent.wetestdemo:id/password")
         pwd.click()
         pwd.send_keys("123456")
-        time.sleep(2)
+        time.sleep(1)
         # 点击登录
         login = self.driver.find_element(by=AppiumBy.ID, value="com.tencent.wetestdemo:id/login")
         login.click()
-        time.sleep(5)
+        time.sleep(2)
         # 进入勾选页，判断submit按钮存在
         submit = self.driver.find_element(by=AppiumBy.ID, value="com.tencent.wetestdemo:id/submitbtn")
         assert submit is not None
-        time.sleep(5)
+        time.sleep(2)
 
 
     def test_2_check_elements(self):
