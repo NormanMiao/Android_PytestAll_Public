@@ -51,7 +51,7 @@ class TestWetestDemo(unittest.TestCase):
                                             value='//android.widget.Button[@text="OK"]')
         assert fail_msg is not None
 
-    def test_1_login_success_0(self):
+    def test_1_login_success(self):
         """输入账号密码——登录成功——进入SELECT页面——断言左上角SELECT元素存在"""
         # 输入账号
         acc = self.driver.find_element(by=AppiumBy.ID, value="com.tencent.wetestdemo:id/username")
@@ -73,10 +73,10 @@ class TestWetestDemo(unittest.TestCase):
         time.sleep(5)
 
 
-    def test_2_check_elements_1(self):
+    def test_2_check_elements(self):
         """登录——勾选item0,item5，点击提交，进入check页，检查内容为item0和item5"""
         # 登录，进入SELECT页
-        self.test_1_login_success_0()
+        self.test_1_login_success()
         time.sleep(3)
         # 选中item0
         item_0 = self.driver.find_element(by=AppiumBy.XPATH,
