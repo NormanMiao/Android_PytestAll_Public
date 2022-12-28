@@ -77,6 +77,7 @@ class TestWetestDemo(unittest.TestCase):
         """登录——勾选item0,item5，点击提交，进入check页，检查内容为item0和item5"""
         # 登录，进入SELECT页
         self.test_1_login_success_0()
+        time.sleep(3)
         # 选中item0
         item_0 = self.driver.find_element(by=AppiumBy.XPATH,
                                                 value='/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.'
